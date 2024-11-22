@@ -1,8 +1,16 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 from flask_frozen import Freezer
 from flaskr import create_app
 
 app = create_app()
+app.config['FREEZER_BASE_URL'] = '/sbhousing'
 freezer = Freezer(app)
+
+@freezer.register_generator
+def static_routes():
+    yield '/static/style.css'
 
 @freezer.register_generator
 def generate_routes():
